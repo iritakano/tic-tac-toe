@@ -47,6 +47,12 @@ const gameplay = (() => {
 
     let gameOver = false;
 
+    const resetGame = () => {
+        currentPlayerIndex = 0;
+        gameboard.resetBoard();
+        gameOver = false;
+    }
+
     let switchPlayers = () => {
         currentPlayerIndex = currentPlayerIndex === 0? 1:0;
     }
@@ -72,9 +78,12 @@ const gameplay = (() => {
         switchPlayers();
     }
 
-    return{
-        playTurn
-    }
+    return{ playTurn, getCurrentPlayer, resetGame}
 
 
 })();
+
+const displayGame = (() => {
+
+}
+)();
