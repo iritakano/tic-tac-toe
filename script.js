@@ -40,18 +40,19 @@ function createPlayer(name, marker) {
 }
 
 const gameplay = (() => {
-    const player1 = createPlayer('Player 1', 'X');
-    const player2 = createPlayer('Player 2', 'O');
-    const players = [player1, player2];
+    let players = [];
     let currentPlayerIndex = 0;
-
     let gameOver = false;
 
-    const resetGame = () => {
+    const resetGame = (name1 = "Player 1", name2 = "Player 2") => {
+        const player1 = createPlayer(name1, 'X');
+        const player2 = createPlayer(name2, 'O');
+        players = [player1, player2];
+
         currentPlayerIndex = 0;
         gameboard.resetBoard();
         gameOver = false;
-    }
+    };
 
     let switchPlayers = () => {
         currentPlayerIndex = currentPlayerIndex === 0? 1:0;
@@ -84,6 +85,30 @@ const gameplay = (() => {
 })();
 
 const displayGame = (() => {
+    const display = document.querySelector('.display');
 
+    const render = () => {
+        display.replaceChildren();
+        gameboard.getBoard().forEach((cell, index) => {
+            const square = document.createElement("div");
+            square.classList.add('square');
+            square.textContent = cell;
+            square.addEventListener("click", () => {
+                gameplay.playTurn(index);
+                render();
+            })
+            display.appendChild(square);
+        })
+    }
+
+  return { render };  
 }
 )();
+
+document.querySelector(".restart").addEventListener("click", () => {
+    gameplay.resetGame(name1, name2);
+    displayGame.render();
+});
+
+gameplay.resetGame("Player 1", "Player 2");
+displayGame.render();
