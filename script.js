@@ -55,7 +55,7 @@ const gameplay = (() => {
         currentPlayerIndex = 0;
         gameboard.resetBoard();
         gameOver = false;
-        resultDisplay.replaceChildren();
+        resultDisplay.textContent = `${player1Name}'s turn`;
     };
 
     let switchPlayers = () => {
@@ -73,9 +73,8 @@ const gameplay = (() => {
         if(!markPlaced) return;
 
         const result = gameboard.checkWin(getCurrentPlayer().marker);
-
         const resultDisplay = document.querySelector(".winner-display");
-
+        
         if (result) {
             gameOver = true;
             if(result === "tie"){
@@ -88,6 +87,7 @@ const gameplay = (() => {
         }
 
         switchPlayers();
+        resultDisplay.textContent = `${getCurrentPlayer().name}'s turn`
     }
 
     return{ playTurn, getCurrentPlayer, resetGame}
