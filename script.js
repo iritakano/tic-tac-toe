@@ -102,6 +102,13 @@ const displayGame = (() => {
             const square = document.createElement("div");
             square.classList.add('square');
             square.textContent = cell;
+
+            if(cell === 'X') {
+                square.classList.add('x-marker');
+            } else if(cell === 'O') {
+                square.classList.add('o-marker');
+            }
+            
             square.addEventListener("click", () => {
                 gameplay.playTurn(index);
                 render();
