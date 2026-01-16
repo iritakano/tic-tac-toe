@@ -80,8 +80,6 @@ const gameplay = (() => {
     }
 
     return{ playTurn, getCurrentPlayer, resetGame}
-
-
 })();
 
 const displayGame = (() => {
@@ -105,10 +103,41 @@ const displayGame = (() => {
 }
 )();
 
-document.querySelector(".restart").addEventListener("click", () => {
-    gameplay.resetGame(name1, name2);
-    displayGame.render();
-});
+const UIController = (() => {
+    const restartBtn = document.querySelector(".restart");
+    const dialog = document.querySelector("dialog");
+    const closeButton = document.querySelector(".close-btn");
+    const startGame = document.querySelector('.start-game-btn');
 
+    const getPlayerNames = () => {
+        const player1Name = document.getElementById('player1').value;
+        const player2Name = document.getElementById('player2').value;
+        return { player1Name, player2Name }
+    }
+
+    const bindEvents = () => {
+        restartBtn.addEventListener("click", () => {
+            const { player1Name, player2Name } = getPlayerNames();
+            gameplay.resetGame(player1Name, player2Name);
+            displayGame.render();
+        });
+
+        closeButton.addEventListener("click", () => {
+            dialog.close();
+        });
+
+        startGame.addEventListener('click', (e) => {
+            const { player1Name, player2Name } = getPlayerNames();
+            gameplay.resetGame(player1Name, player2Name);       
+            dialog.close();
+            displayGame.render();
+        });
+    }
+
+    return { bindEvents };
+
+})();
+
+UIController.bindEvents();
 gameplay.resetGame("Player 1", "Player 2");
 displayGame.render();
