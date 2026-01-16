@@ -44,14 +44,18 @@ const gameplay = (() => {
     let currentPlayerIndex = 0;
     let gameOver = false;
 
-    const resetGame = (name1 = "Player 1", name2 = "Player 2") => {
-        const player1 = createPlayer(name1, 'X');
-        const player2 = createPlayer(name2, 'O');
+    const resetGame = (name1, name2) => {
+        const resultDisplay = document.querySelector(".winner-display");
+        const player1Name = name1 ?? players[0]?.name ?? "Player 1";
+        const player2Name = name2 ?? players[1]?.name ?? "Player 1";
+        const player1 = createPlayer(player1Name, 'X');
+        const player2 = createPlayer(player2Name, 'O');
         players = [player1, player2];
 
         currentPlayerIndex = 0;
         gameboard.resetBoard();
         gameOver = false;
+        resultDisplay.replaceChildren();
     };
 
     let switchPlayers = () => {
@@ -70,9 +74,16 @@ const gameplay = (() => {
 
         const result = gameboard.checkWin(getCurrentPlayer().marker);
 
+        const resultDisplay = document.querySelector(".winner-display");
+
         if (result) {
             gameOver = true;
-            console.log(result === "tie" ? "Tie game!" : `${getCurrentPlayer().name} wins!`);
+            if(result === "tie"){
+                resultDisplay.textContent = "Tie game!"
+            }
+            else{
+               resultDisplay.textContent = `${getCurrentPlayer().name} wins!`
+            }
             return;
         }
 
@@ -118,8 +129,7 @@ const UIController = (() => {
 
     const bindEvents = () => {
         restartBtn.addEventListener("click", () => {
-            const { player1Name, player2Name } = getPlayerNames();
-            gameplay.resetGame(player1Name, player2Name);
+            gameplay.resetGame();
             displayGame.render();
         });
 
@@ -129,7 +139,7 @@ const UIController = (() => {
 
         startGame.addEventListener('click', (e) => {
             const { player1Name, player2Name } = getPlayerNames();
-            gameplay.resetGame(player1Name, player2Name);       
+            gameplay.resetGame(player1Name || undefined, player2Name || undefined);       
             dialog.close();
             displayGame.render();
         });
