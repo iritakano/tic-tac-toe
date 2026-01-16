@@ -103,9 +103,10 @@ const displayGame = (() => {
 }
 )();
 
+const dialog = document.querySelector("dialog");
+
 const UIController = (() => {
     const restartBtn = document.querySelector(".restart");
-    const dialog = document.querySelector("dialog");
     const closeButton = document.querySelector(".close-btn");
     const startGame = document.querySelector('.start-game-btn');
 
@@ -139,5 +140,6 @@ const UIController = (() => {
 })();
 
 UIController.bindEvents();
+dialog.showModal();
 gameplay.resetGame("Player 1", "Player 2");
 displayGame.render();

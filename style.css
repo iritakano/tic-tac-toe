@@ -1,0 +1,10 @@
+.display{
+    border: 1px solid red;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    height: 70vh;
+}
+
+.square{
+    border: 1px solid blue;
+}
