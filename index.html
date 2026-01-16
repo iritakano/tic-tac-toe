@@ -9,7 +9,7 @@
 <body>
     <h1>Tic-Tac-Toe</h1>
     <div class="winner-display"></div>
-    <dialog class="player-names">
+    <dialog>
         <div class="close-container"><button class="close-btn" autofocus>X</button></div>
         <h3>Let's play tic-tac-toe!</h3>
 
@@ -19,10 +19,12 @@
         <label for="player2">Enter Player 2 Name: </label>
         <input type="text" name="player2" id="player2">
 
-        <button type="submit" class="start-game-btn">Start Game</button>
+        <div class="start-btn-container"><button type="submit" class="start-game-btn">Start Game</button></div>
     </dialog>
-    <div class="display"></div>
-    <button class="restart">Restart</button>
+    <div class="display-container">
+        <div class="display"></div>
+    </div>
+    <div class="restart-container"><button class="restart">Play Again</button></div>
     
 
     <script src="script.js"></script>
